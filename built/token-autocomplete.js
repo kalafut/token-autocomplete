@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -22,6 +23,8 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TokenAutocomplete = void 0;
 var SelectModes;
 (function (SelectModes) {
     SelectModes[SelectModes["SINGLE"] = 0] = "SINGLE";
@@ -93,6 +96,13 @@ var TokenAutocomplete = /** @class */ (function () {
         this.autocomplete = new TokenAutocomplete.Autocomplete(this);
         this.debug(false);
         var me = this;
+        if (Array.isArray(this.options.initialTokens)) {
+            this.options.initialTokens.forEach(function (token) {
+                if (typeof token === 'object') {
+                    me.select.addToken(token.value, token.text, token.type, false);
+                }
+            });
+        }
         this.textInput.addEventListener('keydown', function (event) {
             if (event.key == me.KEY_ENTER || event.key == me.KEY_TAB) {
                 event.preventDefault();
@@ -594,4 +604,5 @@ var TokenAutocomplete = /** @class */ (function () {
         _b);
     return TokenAutocomplete;
 }());
+exports.TokenAutocomplete = TokenAutocomplete;
 //# sourceMappingURL=token-autocomplete.js.map

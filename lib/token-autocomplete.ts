@@ -80,7 +80,7 @@ interface SuggestionUriBuilder {
     (query: string): string;
 }
 
-class TokenAutocomplete {
+export class TokenAutocomplete {
 
     KEY_BACKSPACE = 'Backspace';
     KEY_ENTER = 'Enter';
@@ -164,6 +164,14 @@ class TokenAutocomplete {
         this.debug(false);
 
         let me = this;
+
+        if (Array.isArray(this.options.initialTokens)) {
+            this.options.initialTokens.forEach(function (token) {
+                if (typeof token === 'object') {
+                    me.select.addToken(token.value, token.text, token.type, false);
+                }
+            });
+        }
 
         this.textInput.addEventListener('keydown', function (event) {
             if (event.key == me.KEY_ENTER || event.key == me.KEY_TAB) {
